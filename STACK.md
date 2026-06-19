@@ -76,3 +76,11 @@
 **③ All-in Cloudflare (D1)**
 - ✅ จบในที่เดียว บิลเดียว · เร็วมาก (DB ติด Worker) · ถูก+สเกลอัตโนมัติ · ไม่มีบริการนอกให้ล่ม
 - ⚠️ D1=SQLite (ฟีเจอร์น้อยกว่า Postgres) · ไม่มี RLS สำเร็จรูป · auth ต้อง build เอง · ecosystem ใหม่กว่า
+
+## ตัวอย่างงานที่เหมาะกับแต่ละแบบ
+
+**① Google + Apps Script** — ฟอร์มลงทะเบียน · ลงเวลา-เช็คชื่อ (LIFF) · จดออเดอร์→Sheet+LINE · ทะเบียนสต๊อกร้านเล็ก · เบิกของ/ขออนุมัติภายใน · ใบเสนอราคาเร็ว ๆ · แบบสอบถาม
+
+**② Cloudflare + Supabase** — SaaS หลายบริษัท · แอปลูกค้าผู้ใช้หลักร้อย-พัน · บัญชี/เงินเดือน/CRM+รายงาน+AI · เว็บสมัคร/ขายคอร์ส+หลังบ้าน · ต้องแยกข้อมูลตามลูกค้า (RLS) · realtime/RAG *(ตัวอย่างจริง: HomeOffice, PayPilot, skills-lab)*
+
+**③ All-in Cloudflare (D1)** — API/edge ที่ต้องเร็วทั่วโลก · เว็บ+DB เล็ก-กลาง logic ใน Worker · webhook/URL shortener/feature flags · AI agent (Vectorize+Workers AI) · แดชบอร์ดภายในไม่ต้อง RLS ซับซ้อน · งานอ่านเยอะคุมบิลที่เดียว
