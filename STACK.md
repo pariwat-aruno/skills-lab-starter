@@ -27,12 +27,11 @@
 | โค้ด / AI | Claude Code + Claude API | $ รายเดือน |
 | หน้าเว็บ | Cloudflare Pages | ฟรี |
 | API / Backend | Cloudflare Workers (itty-router) | ฟรี → ใช้จริงจ่าย |
-| Database | Supabase / Neon (Postgres + RLS) | ฟรี tier |
+| Database | Supabase (Postgres + RLS) | ฟรี tier |
 | Auth | Supabase / LINE Login | ฟรี |
 | Storage | Cloudflare R2 | ฟรี tier |
 | Cache / KV | Cloudflare KV | ฟรี tier |
-| Payments | PromptPay / Stripe | ตามรายการ |
-| Email (ถ้าต้อง) | Resend | ฟรี tier |
+| Payments | PromptPay (QR) | ตามรายการ |
 | Cron | Workers Scheduled | ฟรี |
 | Version | GitHub | ฟรี |
 | Deploy | wrangler (pages / deploy) | ฟรี |
