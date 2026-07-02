@@ -47,7 +47,7 @@ tags: [tasks, breakdown, mini-app, claude-code]
 ```
 Setup Plan ข้อ 3: Extensions → Apps Script → ใส่โค้ด
    ↓ แตกเป็น
-- TASK-03a: ตั้ง Script Properties (SHEET_ID, N8N_WEBHOOK_URL)
+- TASK-03a: ตั้ง Script Properties (SHEET_ID, NOTIFY_EMAIL)
 - TASK-03b: เขียน function getConfig()
 - TASK-03c: เขียน function onFormSubmit()
 - TASK-03d: เขียน helper logError()
@@ -63,7 +63,11 @@ Setup Plan ข้อ 3: Extensions → Apps Script → ใส่โค้ด
 
 ### STEP 3 — สร้างไฟล์ TASKS.md
 
-ตอบเป็น Markdown ที่ copy ไปวาง GitHub root ได้:
+ตอบเป็น Markdown ที่เก็บไว้ที่ root ของโปรเจกต์ (หรือ GitHub repo ถ้ามี):
+
+> **หมายเหตุ:** ตัวอย่างด้านล่างใช้ stack (ข) Google Sheets + Apps Script
+> ถ้า architecture เลือก stack (ก) เว็บแอป HTML + Cloudflare Pages
+> ให้ปรับ task ให้ตรง (สร้างไฟล์ HTML/CSS/JS + deploy Cloudflare Pages แทน Phase 1-2)
 
 ````markdown
 # TASKS.md — [ชื่อ Project]
@@ -109,13 +113,13 @@ Setup Plan ข้อ 3: Extensions → Apps Script → ใส่โค้ด
 - **ทำ:** เปิด Project Settings → Script Properties → เพิ่ม
 - **Acceptance:**
   - [ ] `SHEET_ID` มีค่า (จาก TASK-01)
-  - [ ] `N8N_WEBHOOK_URL` มีค่า (จาก TASK-05)
-- **Depends on:** TASK-01, TASK-05
+  - [ ] `NOTIFY_EMAIL` มีค่า (อีเมลที่จะรับแจ้งเตือน)
+- **Depends on:** TASK-01
 
 ### TASK-03b: เขียน getConfig()
 - **ทำ:** เขียน function อ่าน Script Properties
 - **Acceptance:**
-  - [ ] return object ที่มี sheetId + n8nWebhookUrl
+  - [ ] return object ที่มี sheetId + notifyEmail
   - [ ] handle กรณี property ไม่มีค่า (throw error)
 - **Depends on:** TASK-03a
 
@@ -125,7 +129,7 @@ Setup Plan ข้อ 3: Extensions → Apps Script → ใส่โค้ด
   - [ ] validate `e.values` มีครบทุก field required
   - [ ] เช็ค duplicate ตาม edge case ใน architecture
   - [ ] เขียน row ลง Sheet `Orders`
-  - [ ] ส่ง webhook ไป n8n
+  - [ ] เรียก function แจ้งเตือน (TASK-04)
   - [ ] ทุก error ถูก log ลง Sheet `Logs`
 - **Depends on:** TASK-03b
 
@@ -138,21 +142,25 @@ Setup Plan ข้อ 3: Extensions → Apps Script → ใส่โค้ด
 
 ---
 
-## Phase 3: n8n
+## Phase 3: แจ้งเตือน
 
-### TASK-04: Import workflow template
-- **ทำ:** สร้าง workflow ที่มี Webhook node
+### TASK-04: ตั้งแจ้งเตือนอีเมลอัตโนมัติ
+- **ทำ:** เขียน function `sendNotify(order)` ใน Apps Script ที่ส่งอีเมลด้วย `MailApp.sendEmail()` ไปที่ `NOTIFY_EMAIL` ทุกครั้งที่มีออเดอร์ใหม่ (เรียกจาก onFormSubmit)
 - **Acceptance:**
-  - [ ] webhook URL คัดลอกได้
-  - [ ] active = true
-- **Depends on:** —
+  - [ ] ส่งอีเมลถึง `NOTIFY_EMAIL` ได้จริง (subject + เนื้อหาสรุปออเดอร์)
+  - [ ] มีออเดอร์ใหม่ 1 รายการ → ได้อีเมล 1 ฉบับ
+  - [ ] ส่งไม่สำเร็จ → log ลง Sheet `Logs` ไม่ทำให้ทั้ง flow ล้ม
+- **Depends on:** TASK-03c
+- **หมายเหตุ:** MailApp ใช้ได้เลย ไม่ต้อง setup บริการภายนอก
 
-### TASK-05: ต่อ LINE Messaging API
-- **ทำ:** เพิ่ม HTTP Request node ส่งไป LINE
+### TASK-05 (ไม่บังคับ — ขั้นสูง): เปลี่ยนแจ้งเตือนเป็น LINE
+- **ทำ:** ถ้าอยากให้แจ้งเตือนเข้า LINE แทน/เพิ่มจากอีเมล — สมัคร LINE OA, เอา Channel Access Token มาใส่ใน Script Properties (`LINE_TOKEN`), แล้วเรียก LINE Messaging API ตรงจาก Apps Script ด้วย `UrlFetchApp`
 - **Acceptance:**
-  - [ ] credential LINE Channel Access Token ถูกต้อง
-  - [ ] ส่ง dummy message ผ่าน
+  - [ ] `LINE_TOKEN` อยู่ใน Script Properties (ไม่ hardcode ในโค้ด)
+  - [ ] มีออเดอร์ใหม่ → ข้อความเข้า LINE ปลายทาง
+  - [ ] เรียก Messaging API ตรงจาก Apps Script (ไม่มีบริการคั่นกลาง)
 - **Depends on:** TASK-04
+- **หมายเหตุ:** ข้ามได้ ไม่บังคับ — ทำเมื่อมี LINE OA + token พร้อมแล้วเท่านั้น
 
 ---
 
@@ -162,15 +170,15 @@ Setup Plan ข้อ 3: Extensions → Apps Script → ใส่โค้ด
 - **ทำ:** กรอก form ด้วยข้อมูลถูกต้อง
 - **Acceptance:**
   - [ ] row เพิ่มใน Sheet `Orders`
-  - [ ] LINE message ถึงปลายทาง
+  - [ ] อีเมลแจ้งเตือนถึงปลายทาง
   - [ ] เวลาทั้ง flow < 5 วินาที
 
 ### TASK-07: Test edge cases
 - **ทำ:** ทดสอบ 3 เคสจาก architecture § 5
 - **Acceptance:**
   - [ ] เบอร์ซ้ำ → update ไม่ insert
-  - [ ] n8n down → retry queue ทำงาน
-  - [ ] timeout → ส่งต่อ n8n สำเร็จ
+  - [ ] ส่งอีเมลไม่สำเร็จ → log ลง `Logs` ไม่ทำให้ทั้ง flow ล้ม
+  - [ ] ข้อมูลผิด format → validate จับได้ ไม่เขียน row เสีย
 
 ---
 
@@ -180,7 +188,7 @@ Setup Plan ข้อ 3: Extensions → Apps Script → ใส่โค้ด
 - [ ] Test happy path + edge cases ผ่าน
 - [ ] CONTEXT.md ตรงกับ implementation จริง
 - [ ] architecture.md อัปเดตตามที่เปลี่ยนแปลงระหว่าง build
-- [ ] commit + push GitHub แล้ว
+- [ ] บันทึกไฟล์ทั้งหมดไว้ในโฟลเดอร์โปรเจกต์ (หรือ commit + push GitHub ถ้ามี)
 ````
 
 ---
@@ -191,7 +199,7 @@ Setup Plan ข้อ 3: Extensions → Apps Script → ใส่โค้ด
 ✅ TASKS.md เสร็จแล้ว — มี [N] task ใน [M] phase
 
 ขั้นต่อไป:
-1. Copy ไปวาง `TASKS.md` ใน GitHub repo root
+1. เก็บ `TASKS.md` ไว้ที่ root ของโฟลเดอร์โปรเจกต์ (หรือ GitHub repo ถ้ามี)
 2. เปิด Claude Code ใน folder
 3. บอก Claude Code:
    "อ่าน CONTEXT.md, architecture.md, TASKS.md

@@ -70,7 +70,7 @@ tags: [context, glossary, mini-app, persistence]
 - **ชื่อไทย:** [ชื่อภาษาไทย]
 - **Description:** [1 ประโยคบอกว่าระบบนี้ทำอะไร]
 - **Type:** Mini app (ไม่ใช่ enterprise)
-- **Stack:** Google Sheets + [Apps Script / n8n / LINE — ตามที่ใช้จริง]
+- **Stack:** [(ก) เว็บแอป HTML + Cloudflare Pages / (ข) Google Sheets + Apps Script — ตามที่เลือกใน architecture]
 
 ---
 
@@ -114,7 +114,7 @@ tags: [context, glossary, mini-app, persistence]
 2. **Error handling:** ทุก function try-catch + log ลง Sheet "Logs"
 3. **Idempotent:** trigger รันซ้ำต้องไม่สร้างข้อมูลซ้ำ
 4. **Timeout:** Apps Script function ต้องจบภายใน 6 นาที
-5. **Secrets:** ใส่ใน Script Properties / n8n credentials เท่านั้น
+5. **Secrets:** ใส่ใน Script Properties (หรือ environment ของ Cloudflare) เท่านั้น
    ห้ามใส่ใน code
 
 ---

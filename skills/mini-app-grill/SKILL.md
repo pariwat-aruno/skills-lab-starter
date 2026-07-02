@@ -2,10 +2,11 @@
 name: mini-app-grill
 description: >
   สัมภาษณ์เจ้าของธุรกิจให้เข้าใจระบบ mini app ก่อนออกแบบหรือเขียนโค้ด
-  ใช้กับ stack Google Sheets / Apps Script / GitHub / n8n
+  เป็นขั้นเก็บความต้องการ ยังไม่ผูก stack — stack จะเลือกตอน mini-app-architect
+  (มี 2 ทางหลัก: เว็บแอป HTML + Cloudflare Pages หรือ Google Sheets + Apps Script)
   ถามทีละ 2-3 ข้อจนครบ 8 มิติ ห้ามข้ามถึงผู้ใช้จะรีบ
   ใช้ skill นี้เมื่อผู้ใช้พูดถึง: อยากทำ mini app, สร้าง web app เล็กๆ,
-  ทำระบบบน Google Sheet, ใช้ Apps Script ทำ [X], อยากทำ automation บน n8n,
+  ทำระบบบน Google Sheet, ใช้ Apps Script ทำ [X], อยากทำ automation,
   ออกแบบระบบให้หน่อย, จะทำระบบ [X], คิดว่าจะใช้ Sheet + Script ทำ [X],
   ทำ form ลง Sheet, ทำ dashboard, ทำ trigger แจ้งเตือน, ทำ workflow
   แม้ผู้ใช้จะไม่พูดคำเหล่านี้ตรงๆ ถ้าบริบทคือ
@@ -37,7 +38,7 @@ tags: [grill, intake, mini-app, interview]
 
 **รอบที่ 2 — เข้าใจข้อมูล**
 3. INPUT — ข้อมูลเข้ามาจากไหน? ความถี่?
-4. STORAGE — เก็บที่ไหน Sheet ชื่ออะไร column อะไรบ้าง?
+4. STORAGE — ต้องเก็บข้อมูลอะไรบ้าง? แต่ละรายการมีข้อมูลย่อยอะไร (เช่น ชื่อ/วันที่/จำนวน)? ข้อมูลเยอะแค่ไหน?
 
 **รอบที่ 3 — เข้าใจ logic**
 5. PROCESS — ระหว่างทางต้องทำอะไรบ้าง? คำนวณ/ตรวจ/เปรียบเทียบ?
@@ -45,7 +46,7 @@ tags: [grill, intake, mini-app, interview]
 
 **รอบที่ 4 — เข้าใจ runtime + ความเสี่ยง**
 7. TRIGGER — เริ่มทำงานเมื่อไร? (manual / cron / event)
-8. EDGE CASES — ข้อมูลซ้ำ/ผิด format/n8n down/timeout ทำยังไง?
+8. EDGE CASES — ข้อมูลซ้ำ/ผิด format/ระบบล่ม/timeout ทำยังไง?
 
 ---
 
@@ -86,7 +87,7 @@ tags: [grill, intake, mini-app, interview]
 ✅ "อยากให้ระบบทำงานทันทีที่มีข้อมูลใหม่ หรือทำเป็นรอบๆ?"
 
 ❌ "ต้องการ DB schema แบบไหน?"
-✅ "ในแต่ละแถวของ Sheet ต้องเก็บอะไรบ้าง?"
+✅ "ข้อมูลแต่ละรายการต้องเก็บอะไรบ้าง?"
 
 ❌ "Idempotent หรือไม่?"
 ✅ "ถ้าระบบทำงานซ้ำ จะมีข้อมูลซ้ำขึ้นมาไหม?"
@@ -104,17 +105,16 @@ tags: [grill, intake, mini-app, interview]
 **1. WHO:** [คน/บทบาท/จำนวน]
 **2. PROBLEM:** [ปัญหาที่แก้]
 **3. INPUT:** [ที่มา + ความถี่]
-**4. STORAGE:** [Sheet + columns]
+**4. STORAGE:** [ข้อมูลที่ต้องเก็บ + รายละเอียดย่อยของแต่ละรายการ]
 **5. PROCESS:** [logic ระหว่างทาง]
 **6. OUTPUT:** [ปลายทาง + format]
 **7. TRIGGER:** [เมื่อไรเริ่ม]
 **8. EDGE CASES:** [list]
 
-**Stack ที่ผู้ใช้จะใช้:**
-- [ ] Google Sheet (บังคับ)
-- [ ] Apps Script
-- [ ] n8n
-- [ ] LINE / Email
+**Stack:** ยังไม่ต้องเลือกตอนนี้ — จะเลือกตอน mini-app-architect
+(มี 2 ทางหลัก: เว็บแอป HTML + Cloudflare Pages หรือ Google Sheets + Apps Script)
+บันทึกไว้แค่ความต้องการที่เกี่ยวข้อง เช่น ทีมใช้ Google อยู่แล้วไหม /
+ต้องการหน้าจอใช้งาน-ฟอร์ม-แดชบอร์ดหรือไม่ / ต้องแจ้งเตือน (อีเมล/LINE) ไหม
 
 ครบทั้งหมดไหมครับ? ถ้าครบ → ขั้นต่อไปคือสร้าง CONTEXT.md
 ที่จะเก็บคำเฉพาะของ project นี้ไว้ใช้ตอนออกแบบและ build จริง
@@ -132,9 +132,9 @@ tags: [grill, intake, mini-app, interview]
 
 ### ❌ ห้าม
 
-- ห้ามออกแบบ architecture / diagram / Sheet structure
+- ห้ามออกแบบ architecture / diagram / โครงสร้างข้อมูล
 - ห้ามเขียนโค้ดใดๆ
-- ห้ามแนะนำ stack อื่นนอก Sheet/Apps Script/GitHub/n8n
+- ห้ามเลือก/ล็อก stack ตอนนี้ — เก็บแค่ความต้องการ (stack เลือกตอน mini-app-architect)
 - ห้ามถามทั้ง 8 มิติในครั้งเดียว — แบ่ง 3-4 รอบ
 - ห้ามข้ามถึงผู้ใช้จะบอก "เร็วๆ"
 - ห้ามใส่ default ตอน "ไม่รู้" — บี้ต่อจนคิดออก
