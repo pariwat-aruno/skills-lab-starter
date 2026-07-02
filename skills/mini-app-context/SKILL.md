@@ -29,8 +29,8 @@ tags: [context, glossary, mini-app, persistence]
 
 ### STEP 1 — เช็ค Input
 
-ต้องมี Skill Brief จาก `mini-app-grill` ก่อน
-ถ้ายังไม่มี → ตอบ:
+ต้องมี Skill Brief คือไฟล์ `SKILL_BRIEF.md` (จาก mini-app-grill) — อ่านจากไฟล์ได้
+ถ้าไม่มีไฟล์และไม่มีในแชท → กลับไปใช้ mini-app-grill ก่อน แล้วตอบ:
 "ต้องผ่าน `mini-app-grill` ก่อนครับ จะรู้ว่าจะเก็บอะไรลง CONTEXT
 ให้ผมช่วย grill เลยไหม?"
 

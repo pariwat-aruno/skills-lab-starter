@@ -27,7 +27,7 @@ tags: [architect, design, mermaid, mini-app]
 ### STEP 1 — เช็ค Input
 
 ต้องมี 2 อย่าง:
-1. Skill Brief (จาก mini-app-grill)
+1. Skill Brief = ไฟล์ `SKILL_BRIEF.md` (จาก mini-app-grill)
 2. CONTEXT.md (จาก mini-app-context) — ใช้ดึงชื่อ Sheet/column/role
 
 ถ้าขาด → บอกผู้ใช้:
@@ -135,7 +135,7 @@ graph TD
 
 ## 6. Next Steps
 
-1. Copy ไฟล์นี้ไปวาง GitHub: `docs/architecture.md`
+1. Copy ไฟล์นี้ไปวาง GitHub repo root: `architecture.md`
 2. ใช้ skill `mini-app-tasks` ตัดเป็น TODO ย่อยให้ Claude Code
 3. ระหว่าง build เจอเรื่องที่ architecture ไม่ครอบคลุม
    → กลับมาอัปเดตไฟล์นี้ก่อน อย่าแก้ใน code อย่างเดียว
@@ -149,7 +149,7 @@ graph TD
 ✅ Architecture Document เสร็จแล้ว
 
 ขั้นต่อไป:
-- Copy ไปวาง `docs/architecture.md` ใน GitHub repo
+- Copy ไปวาง `architecture.md` ที่ root ของ GitHub repo
 - ใช้ skill `mini-app-tasks` ตัด TODO ย่อยส่ง Claude Code
   พิมพ์: "ตัด task จาก architecture นี้"
 

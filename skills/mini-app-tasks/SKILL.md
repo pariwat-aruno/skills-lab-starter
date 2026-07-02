@@ -25,7 +25,6 @@ tags: [tasks, breakdown, mini-app, claude-code]
 4. Claude Code อ่านแล้วเริ่ม build ได้ทันที
 
 หลักการ: **"task ใหญ่ทำให้ AI หลุด — task เล็กทำให้ AI โฟกัส"**
-(จาก Matt /to-issues)
 
 ---
 

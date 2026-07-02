@@ -9,7 +9,7 @@ description: >
   ที่ปรึกษา skill — แม้ผู้ใช้จะไม่พูดคำเหล่านี้ตรงๆ
   ถ้าบริบทคือ "อยากให้ AI ช่วยงานแต่ไม่รู้จะเริ่มยังไง"
   ให้ใช้ skill นี้เสมอ
-  ผลลัพธ์: Skill Roadmap เรียงตาม ROI พร้อมส่งให้ skill-writer สร้างได้เลย
+  ผลลัพธ์: Skill Roadmap เรียงตาม ROI พร้อมให้ Claude Code เขียน SKILL.md ต่อได้เลย
 tags: [advisor, planning, roadmap, onboarding]
 ---
 
@@ -106,14 +106,14 @@ output ของอันแรก = input ของอันถัดไป
 เพราะ [เหตุผลที่เลือกตัวนี้ก่อน อธิบายให้เชื่อมกับธุรกิจของเขาจริงๆ]
 
 **⏭ Next Action**
-พิมพ์ว่า **"สร้าง [ชื่อ Skill]"** แล้ว skill-writer จะเขียน SKILL.md ให้เลย
+พิมพ์ว่า **"ช่วยเขียน SKILL.md สำหรับ [ชื่อ Skill]"** ให้ Claude Code เขียนให้ได้เลย
 
 ---
 
 ### STEP 5 — เสนอ Test Case ก่อนจบ
 
 หลังสร้าง Roadmap แล้ว ให้เสนอ test case 2-3 ข้อ
-ที่จะใช้ทดสอบ Skill อันดับ 1 หลัง skill-writer สร้างเสร็จ:
+ที่จะใช้ทดสอบ Skill อันดับ 1 หลัง Claude Code เขียน SKILL.md เสร็จ:
 
 ```
 นี่คือ 3 ประโยคที่ผมจะใช้ทดสอบ [ชื่อ Skill] ตัวแรก:
